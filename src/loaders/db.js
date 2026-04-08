@@ -1,13 +1,35 @@
+// import mongoose from "mongoose";
+// import { DB_URI } from "../config/env.js";
+
+// const db = async () => {
+//   try {
+//     console.log("before connection ", DB_URI);
+//     await mongoose.connect(DB_URI);
+//     console.log("Db connected successfully");
+//   } catch (error) {
+//     console.log(`Error while db connection`, error);
+//   }
+// };
+// export default db;
+
 import mongoose from "mongoose";
 import { DB_URI } from "../config/env.js";
 
 const db = async () => {
   try {
-    console.log("before connection ", DB_URI);
+    console.log("Connecting to DB:", DB_URI);
+
+    if (!DB_URI) {
+      throw new Error("DB_URI is missing");
+    }
+
     await mongoose.connect(DB_URI);
+
     console.log("Db connected successfully");
   } catch (error) {
-    console.log(`Error while db connection`, error);
+    console.error("DB connection failed:", error);
+    process.exit(1); //stop server
   }
 };
+
 export default db;
