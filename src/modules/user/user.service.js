@@ -1,4 +1,5 @@
 import { createUser, getUsers, countUsers } from "./user.repository.js";
+import { PORT, DB_URI } from "../../config/env.js";
 
 export const addUser = async (data) => {
   try {
@@ -30,7 +31,7 @@ export const fetchUsers = async (req) => {
 
     let skip = (page - 1) * limit;
 
-    console.log("Skip =====For ", skip, "Limit = ", limit);
+    console.log("Skip =====For DB_URI", DB_URI, skip, "Limit = ", limit);
 
     const users = await getUsers({ skip, limit });
     const total = await countUsers();
