@@ -21,6 +21,7 @@
 // export default db;
 
 // /src/loaders/db.js
+// /src/loaders/db.js
 import mongoose from "mongoose";
 import { DB_URI } from "../config/env.js";
 
@@ -28,6 +29,7 @@ let cached = global.mongoose || { conn: null, promise: null };
 
 const connectDB = async () => {
   if (cached.conn) return cached.conn;
+
   if (!DB_URI) throw new Error("DB_URI missing");
 
   if (!cached.promise) {
