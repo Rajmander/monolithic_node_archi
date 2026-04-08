@@ -1,12 +1,3 @@
-// import express from "express";
-// const router = express.Router();
-
-// import { saveAdmin } from "./admin.controller.js";
-
-// router.post("/admin", saveAdmin);
-
-// export default router;
-
 import express from "express";
 import { getAdmins, createAdmin } from "./admin.controller.js";
 import usersRoutes from "./modules/customers/customer.routes.js";

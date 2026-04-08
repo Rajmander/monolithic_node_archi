@@ -1,4 +1,3 @@
-//Admin JWT Auth
 import jwt from "jsonwebtoken";
 import Admin from "../admin.model.js";
 import { JWT_SECRET } from "../../../config/env.js";
