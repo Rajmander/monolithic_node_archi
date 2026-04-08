@@ -30,7 +30,7 @@ export const fetchUsers = async (req) => {
 
     let skip = (page - 1) * limit;
 
-    console.log("Skip ===== ", skip, "Limit = ", limit);
+    console.log("Skip =====For ", skip, "Limit = ", limit);
 
     const users = await getUsers({ skip, limit });
     const total = await countUsers();
@@ -45,6 +45,7 @@ export const fetchUsers = async (req) => {
       },
     };
   } catch (error) {
+    console.log("error =====", error);
     error.statusCode = 500;
     throw err;
   }

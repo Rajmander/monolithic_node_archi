@@ -8,6 +8,7 @@ export const createUser = async (userData) => {
 
 // LISTING USER
 export const getUsers = async ({ skip, limit }) => {
+  console.log("Inside getUsers");
   return await User.find().skip(skip).limit(limit);
 };
 
