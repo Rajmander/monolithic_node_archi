@@ -10,6 +10,7 @@ export const adminAuth = async (req, res, next) => {
 
     const decoded = jwt.verify(token, JWT_SECRET);
     const admin = await Admin.findById(decoded.id);
+
     if (!admin) throw new Error("Admin not found");
 
     req.user = admin;

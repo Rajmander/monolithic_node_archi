@@ -9,7 +9,7 @@ loadExpress(app);
 
 const BASE_ROUTE = `${API_PREFIX}/${API_VERSION}`;
 
-app.use(`${BASE_ROUTE}`, userRoutes);
+//app.use(`${BASE_ROUTE}`, userRoutes);
 app.use(`${BASE_ROUTE}`, adminRoutes);
 
 export default app;

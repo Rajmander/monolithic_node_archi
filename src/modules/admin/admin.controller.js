@@ -1,7 +1,7 @@
 import { error, success } from "../../utils/response.js";
-import { addAdmin } from "./admin.service.js";
+import { addAdmin, adminLoginService } from "./admin.service.js";
 
-export const saveAdmin = async (req, res, next) => {
+export const createAdmin = async (req, res, next) => {
   try {
     const { name, email, password, role } = req.body;
     const admin = await addAdmin({ name, email, password, role });
@@ -16,3 +16,5 @@ export const saveAdmin = async (req, res, next) => {
     );
   }
 };
+
+export const adminLogin = (req, res, next) => {};

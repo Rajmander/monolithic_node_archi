@@ -1,5 +1,6 @@
 import express from "express";
 import { loadExpress } from "./src/loaders/express.js";
+
 // Routes
 import userRoutes from "./src/modules/user/user.routes.js";
 import adminRoutes from "./src/modules/admin/admin.routes.js";
