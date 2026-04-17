@@ -17,4 +17,14 @@ export const createAdmin = async (req, res, next) => {
   }
 };
 
-export const adminLogin = (req, res, next) => {};
+export const adminLogin = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    console.log(`Email ${email} and password ${password}`);
+    const admin = await adminLoginService(email, password);
+    
+    success(res, 200, admin, "Login Successfully");
+  } catch (err) {
+    error(res, 401, err.message, "Login failed");
+  }
+};

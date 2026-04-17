@@ -6,5 +6,5 @@ export const createAdmin = async (data) => {
 };
 
 export const findAdminByEmail = async (email) => {
-  return await Admin.findOne({ email });
+  return await Admin.findOne({ email }, { password: 1, name: 1, role: 1 });
 };
