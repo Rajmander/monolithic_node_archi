@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 
 export const generateAccessToken = (admin, JWT_SECRET) => {
+  console.log(`generateAccessToken hi ${JWT_SECRET}`);
   return jwt.sign({ id: admin._id, role: admin.role }, JWT_SECRET, {
     expiresIn: "1m",
   });

@@ -23,8 +23,8 @@ const router = express.Router();
 // Admin management
 //router.get("/", adminAuth, roleAuth(["superadmin"]), getAdmins);
 //router.post("/admin", adminAuth, roleAuth(["superadmin"]), createAdmin);
-router.post("/admin", adminAuth, createAdmin);
 router.post("/admin/login", adminLogin);
+router.post("/admin", adminAuth, createAdmin);
 router.post("/admin/refreshToken", refreshtoken);
 
 // Module sub-routes with role access

@@ -51,7 +51,8 @@ export const refreshtoken = async (req, res, next) => {
 
     const data = await refreshTokenService(refreshToken);
     success(res, 200, data, "Token refreshed");
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    error(res, 401, err.message, "All gone");
+    console.log(err);
   }
 };

@@ -1,5 +1,5 @@
 import dotenvFlow from "dotenv-flow";
-dotenvFlow.config({ override: true }); // , debug: true
+dotenvFlow.config({ override: true, debug: true }); // , debug: true
 
 export const NODE_ENV = process.env.NODE_ENV;
 export const PORT = process.env.PORT;
@@ -9,4 +9,6 @@ export const API_VERSION = process.env.API_VERSION;
 export const BASE_URL = process.env.BASE_URL;
 export const JWT_SECRET = process.env.JWT_SECRET;
 
-console.log(`Running ${NODE_ENV} on port ${PORT}`);
+console.log(
+  `Running hello ${NODE_ENV} on port ${PORT} JWT : ${process.env.JWT_SECRET}`,
+);

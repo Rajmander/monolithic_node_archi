@@ -5,6 +5,7 @@ import {
   findRefreshTokenByHash,
   revokeRefreshToken,
   findUserById,
+  revokeAllRefreshTokens,
 } from "../auth/auth.repository.js";
 import bcrypt from "bcrypt";
 import { JWT_SECRET } from "../../config/env.js";
@@ -63,24 +64,46 @@ export const refreshTokenService = async (oldToken) => {
     throw error;
   }
 
-  // Reuse case
+  if (new Date() > tokenDoc.expiresAt) {
+    await revokeRefreshToken(OldHashToken);
+    throw Object.assign(new Error("Refresh token expired"), {
+      statusCode: 401,
+    });
+  }
+
+  // Reuse case if refresh token is revoked and user use it then it must be logout
+  if (tokenDoc.isRevoked) {
+    await revokeAllRefreshTokens(tokenDoc.userId);
+    const error = new Error("Refesh Token reuse detected");
+    error.statusCode = 401;
+    throw error;
+  }
 
   // Rotate token
   const newRefreshToken = generateRefreshToken();
   const newHash = hashToken(newRefreshToken);
 
   // Revoke refresh token
-  await revokeRefreshToken(hashToken, { replacedByToken: newHash });
+  await revokeRefreshToken(OldHashToken, { replacedByToken: newHash });
 
   // create refresh token
   const refreshTokenObject = {
     userId: tokenDoc.userId,
     tokenHash: newHash,
     expiresAt: getRefreshTokenExpiry(),
+    //expiresAt: new Date(Date.now() - 60 * 1000),
   };
 
   await createRefreshToken(refreshTokenObject);
+
   const admin = await findUserById(tokenDoc.userId);
+
+  if (!admin) {
+    const error = new Error("User not found");
+    error.statusCode = 400;
+    throw error;
+  }
+
   const accessToken = generateAccessToken(
     {
       id: tokenDoc.userId,
@@ -116,10 +139,11 @@ export const adminLoginService = async (email, password, meta) => {
       throw error;
     }
 
-    console.log("After Password");
+    console.log("After Password----> ", JWT_SECRET);
 
     const accessToken = generateAccessToken(admin, JWT_SECRET);
-    console.log(accessToken);
+    console.log(`accessToken= ${accessToken}`);
+
     const refreshToken = generateRefreshToken();
     console.log(refreshToken);
 
@@ -131,6 +155,7 @@ export const adminLoginService = async (email, password, meta) => {
       userId: admin._id,
       tokenHash: tokenHash,
       expiresAt: getRefreshTokenExpiry(),
+      //expiresAt: new Date(Date.now() - 60 * 1000),
       device: meta.device,
       ipAddress: meta.ipAddress,
       userAgent: meta.userAgent,
