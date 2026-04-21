@@ -1,5 +1,9 @@
 import { error, success } from "../../utils/response.js";
-import { addAdmin, adminLoginService } from "./admin.service.js";
+import {
+  addAdmin,
+  adminLoginService,
+  refreshTokenService,
+} from "./admin.service.js";
 
 export const createAdmin = async (req, res, next) => {
   try {
@@ -20,11 +24,34 @@ export const createAdmin = async (req, res, next) => {
 export const adminLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+
+    const meta = {
+      ipAddress: req.ip,
+      device: req.headers["user-agent"],
+      userAgent: req.headers["user-agent"],
+    };
+
+    console.log("meta data", meta);
+
     console.log(`Email ${email} and password ${password}`);
-    const admin = await adminLoginService(email, password);
-    
+
+    const admin = await adminLoginService(email, password, meta);
+
     success(res, 200, admin, "Login Successfully");
   } catch (err) {
     error(res, 401, err.message, "Login failed");
+  }
+};
+
+// Refresh Token
+export const refreshtoken = async (req, res, next) => {
+  try {
+    const refreshToken = req.headers["x-refresh-token"];
+    console.log("step 1", refreshToken);
+
+    const data = await refreshTokenService(refreshToken);
+    success(res, 200, data, "Token refreshed");
+  } catch (error) {
+    console.log(error);
   }
 };

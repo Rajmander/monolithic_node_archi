@@ -1,5 +1,5 @@
 import dotenvFlow from "dotenv-flow";
-dotenvFlow.config({ override: true, debug: true });
+dotenvFlow.config({ override: true }); // , debug: true
 
 export const NODE_ENV = process.env.NODE_ENV;
 export const PORT = process.env.PORT;

@@ -9,7 +9,7 @@
 
 import express from "express";
 
-import { createAdmin, adminLogin } from "./admin.controller.js";
+import { createAdmin, adminLogin, refreshtoken } from "./admin.controller.js";
 
 //import usersRoutes from "./modules/customers/customer.routes.js";
 // import productsRoutes from "./modules/products/product.routes.js";
@@ -23,8 +23,9 @@ const router = express.Router();
 // Admin management
 //router.get("/", adminAuth, roleAuth(["superadmin"]), getAdmins);
 //router.post("/admin", adminAuth, roleAuth(["superadmin"]), createAdmin);
-router.post("/admin", createAdmin);
+router.post("/admin", adminAuth, createAdmin);
 router.post("/admin/login", adminLogin);
+router.post("/admin/refreshToken", refreshtoken);
 
 // Module sub-routes with role access
 // router.use(

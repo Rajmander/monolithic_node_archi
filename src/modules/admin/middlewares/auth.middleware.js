@@ -10,7 +10,7 @@ import { JWT_SECRET } from "../../../config/env.js";
  * 3. if not valid handle error
  * 4. if valid process further -
  *
- * 
+ *
  */
 
 export const adminAuth = async (req, res, next) => {
@@ -22,7 +22,8 @@ export const adminAuth = async (req, res, next) => {
     const admin = await Admin.findById(decoded.id);
 
     if (!admin) throw new Error("Admin not found");
-
+    console.log("Admin ===", admin);
+    //return;
     req.user = admin;
     next();
   } catch (err) {
