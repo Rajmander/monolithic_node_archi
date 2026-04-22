@@ -12,3 +12,4 @@ export const JWT_SECRET = process.env.JWT_SECRET;
 console.log(
   `Running hello ${NODE_ENV} on port ${PORT} JWT : ${process.env.JWT_SECRET}`,
 );
+//
